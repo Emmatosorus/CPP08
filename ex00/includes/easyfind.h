@@ -5,7 +5,7 @@
 #include <algorithm>
 
 template <typename T>
-typename T::iterator  easyfind(T t, int nb)
+typename T::iterator easyfind(T t, int nb)
 {
 	typename T::iterator it;
 	it = std::find(t.begin(), t.end(), nb);
