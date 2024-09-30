@@ -4,6 +4,7 @@
 #include <iostream>
 #include <limits>
 #include <cstdlib>
+#include <vector>
 
 
 class Span
@@ -14,8 +15,6 @@ class Span
 		~Span();
 
 		Span & operator=( const Span & s);
-		int operator[]( unsigned int index);
-		int operator[]( unsigned int index) const;
 
 		unsigned int	get_size() const;
 		unsigned int	get_stored() const;
@@ -37,11 +36,9 @@ class Span
 	private:
 		Span();
 
-		int *array;
-		unsigned int size;
+		std::vector<int> array;
+		unsigned int max_size;
 		unsigned int stored;
 };
-
-std::ostream & operator<<(std::ostream & o, Span & s);
 
 #endif

@@ -2,68 +2,40 @@
 
 Span::Span()
 {
-	std::cout << "Span : Default constructor called" << std::endl;
+	// std::cout << "Span : Default constructor called" << std::endl;
 }
 
 Span::~Span()
 {
-	std::cout << "Span : Destructor called" << std::endl;
-	delete [] this->array;
+	// std::cout << "Span : Destructor called" << std::endl;
 }
 
-Span::Span(unsigned int size) : size(size), stored(0)
+Span::Span(unsigned int max_size) : max_size(max_size), stored(0)
 {
-	if (this->size == 0)
+	if (this->max_size == 0)
 		throw std::length_error("Span : Can't create array of 0");
-	std::cout << "Span : Constructor called with size : " << size << std::endl;
-	this->array = new int[size];
+	std::cout << "Span : Constructor called with max size : " << max_size << std::endl;
 }
 
 Span::Span(const Span & s)
 {
-	std::cout << "Span : Copy constructor called" << std::endl;
-	this->size = s.get_size();
-	this->array = new int[this->size];
-	for (unsigned int i = 0; i < this->size; i++)
-		this->array[i] = s[i];
+	// std::cout << "Span : Copy constructor called" << std::endl;
+	this->array = s.array;
+	this->max_size = s.get_size();
 	this->stored = s.get_stored();
 }
 
 Span & Span::operator=(const Span &s)
 {
-	delete [] this->array;
-	this->size = s.get_size();
-	this->array = new int[this->size];
-	for (unsigned int i = 0; i < this->size; i++)
-		this->array[i] = s[i];
+	this->array = s.array;
+	this->max_size = s.get_size();
 	this->stored = s.get_stored();
 	return *this;
 }
 
-int	Span::operator[](unsigned int index)
-{
-	if (index >= this->size)
-		throw std::out_of_range("Span : Index out of bounds");
-	return this->array[index];
-}
-
-int	Span::operator[](unsigned int index) const
-{
-	if (index >= this->size)
-		throw std::out_of_range("Span : Index out of bounds");
-	return this->array[index];
-}
-
-std::ostream & operator<<(std::ostream & o, Span & s)
-{
-	for (size_t i = 0; i < s.get_size(); i++)
-		std::cout << s[i] << " ";
-	return o;
-}
-
 unsigned int	Span::get_size() const
 {
-	return this->size;
+	return this->max_size;
 }
 
 unsigned int	Span::get_stored() const
@@ -73,10 +45,10 @@ unsigned int	Span::get_stored() const
 
 void	Span::addNumber(int nb)
 {
-	if (this->stored == this->size)
+	if (this->stored == this->max_size)
 		throw std::length_error("Span : Cannot add more numbers");
 	this->stored++;
-	this->array[this->stored - 1] = nb;
+	this->array.insert(this->array.end(), nb);
 }
 
 unsigned int Span::shortestSpan()
